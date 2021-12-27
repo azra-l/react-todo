@@ -1,8 +1,11 @@
 import { ListItem, ListItemText, Checkbox, IconButton, ListItemSecondaryAction} from "@material-ui/core";
 import { DeleteOutlineRounded, Edit } from '@material-ui/icons';
+import useToggleState from "./hooks/useToggleState";
+import EditTodoForm from "./EditTodoForm";
 
 const Todo = (props) => {
-    const { task, completed, id, removeTodo, toggleTodo } = props;
+    const { task, completed, id, removeTodo, toggleTodo, editTodo } = props;
+    const [ isEditing, toggleIsEditing ] = useToggleState(false);
 
     const handleDelete = (e) => {
         e.preventDefault();
@@ -14,21 +17,29 @@ const Todo = (props) => {
         toggleTodo(id);
     }
 
+    const handleToggleEdit = (e) => {
+        e.preventDefault();
+        toggleIsEditing();
+    }
+
     return(
         <div>
-             <ListItem>
-                 <Checkbox checked={completed} tabIndex={-1} onClick={handleToggleComplete}/>
-                <ListItemText>
-                   {task}
-                </ListItemText>
-                <ListItemSecondaryAction>
+             <ListItem style={{height: "64px"}}>
+                 {isEditing ? 
+                 <EditTodoForm task={task} id={id} editTodo={editTodo} toggleIsEditing={toggleIsEditing}/>:
+                <>
+                    <Checkbox checked={completed} tabIndex={-1} onClick={handleToggleComplete}/>
+                    <ListItemText>{task}</ListItemText>
+                    <ListItemSecondaryAction>
                     <IconButton aria-label="Delete" onClick={handleDelete}>
                         <DeleteOutlineRounded/>
                     </IconButton>
-                    <IconButton aria-label="Edit" >
+                    <IconButton aria-label="Edit" onClick={handleToggleEdit}>
                         <Edit/>
                     </IconButton>
-                </ListItemSecondaryAction>
+                    </ListItemSecondaryAction>
+                </>
+                }
             </ListItem>
         </div>
     )
