@@ -7,15 +7,17 @@ const TodoList = (props) => {
         <div>
             <Paper>
                 <List>
-                    {props.todos.map((todo) => (
+                    {props.todos.map((todo, i) => (
                         <>
                            <Todo 
                             task={todo.task} 
                             key={todo.id} id={todo.id} 
                             completed={todo.completed} 
                             removeTodo = {props.removeTodo}
-                            toggleTodo = {props.toggleTodo}/>
-                            <Divider/>
+                            toggleTodo = {props.toggleTodo}
+                            editTodo = {props.editTodo}
+                            />
+                           {i < props.todos.length - 1 && <Divider/>} 
                         </>    
                     ))}
                 </List>
