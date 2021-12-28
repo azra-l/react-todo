@@ -2,12 +2,12 @@ import { ListItem, ListItemText, Checkbox, IconButton, ListItemSecondaryAction} 
 import { DeleteOutlineRounded, Edit } from '@material-ui/icons';
 import useToggleState from "./hooks/useToggleState";
 import EditTodoForm from "./EditTodoForm";
-import { TodosContext } from "./contexts/todos.context";
-import { useContext } from "react";
+import { DispatchContext } from "./contexts/todos.context";
+import React, { useContext, memo } from "react";
 
 const Todo = (props) => {
     const { task, completed, id } = props;
-    const {dispatch} = useContext(TodosContext);
+    const dispatch = useContext(DispatchContext);
     const [ isEditing, toggleIsEditing ] = useToggleState(false);
 
     const handleDelete = (e) => {
@@ -48,4 +48,4 @@ const Todo = (props) => {
     )
 }
 
-export default Todo;
+export default memo(Todo);
