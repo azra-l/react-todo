@@ -36,7 +36,7 @@ const useTodoState = (initialTodos) => {
         setTodos(edited);
     }
     
-    return [todos, addTodo, removeTodo, toggleTodo, editTodo];
+    return {todos, addTodo, removeTodo, toggleTodo, editTodo};
 }
 
 export default useTodoState;
